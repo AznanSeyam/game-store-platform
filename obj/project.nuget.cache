@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "PvuyKtC3ClI=",
+  "dgSpecHash": "jytWqmWIcps=",
   "success": true,
   "projectFilePath": "/home/linux/RiderProjects/hotel-reservation-api/hotel-reservation-api/hotel-reservation-api.csproj",
   "expectedPackageFiles": [
     "/home/linux/.nuget/packages/automapper/16.2.0/automapper.16.2.0.nupkg.sha512",
+    "/home/linux/.nuget/packages/bcrypt.net-next/4.2.0/bcrypt.net-next.4.2.0.nupkg.sha512",
     "/home/linux/.nuget/packages/efcore.namingconventions/10.0.1/efcore.namingconventions.10.0.1.nupkg.sha512",
     "/home/linux/.nuget/packages/fluentvalidation/12.2.0/fluentvalidation.12.2.0.nupkg.sha512",
     "/home/linux/.nuget/packages/fluentvalidation.dependencyinjectionextensions/12.2.0/fluentvalidation.dependencyinjectionextensions.12.2.0.nupkg.sha512",

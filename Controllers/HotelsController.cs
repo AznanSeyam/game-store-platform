@@ -2,102 +2,61 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using hotel_reservation_api.Core.DTOs.Hotel;
+using hotel_reservation_api.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using hotel_reservation_api.Data;
 
-namespace hotel_reservation_api.Controllers
+namespace hotel_reservation_api.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class HotelsController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class HotelsController(HotelReservationDBContext context) : ControllerBase
+    private readonly IHotelService _hotelService;
+
+    public HotelsController(IHotelService hotelService)
     {
+        _hotelService = hotelService;
+    }
 
-        // GET: api/Hotels
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
-        {
-            return await context.Hotels.ToListAsync();
-        }
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var hotels = await _hotelService.GetAllAsync();
+        return Ok(hotels);
+    }
 
-        // GET: api/Hotels/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
-        {
-            var hotel = await context.Hotels
-            .Include(q => q.Country)
-            .FirstOrDefaultAsync(c => c.Id == id);
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var hotel = await _hotelService.GetByIdAsync(id);
+        if (hotel == null) return NotFound($"Hotel with Id {id} not found.");
 
-            if (hotel == null)
-            {
-                return NotFound();
-            }
+        return Ok(hotel);
+    }
 
-            return hotel;
-        }
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateHotelDto dto)
+    {
+        var createdHotel = await _hotelService.CreateAsync(dto);
+        return CreatedAtAction(nameof(GetById), new { id = createdHotel.Id }, createdHotel);
+    }
 
-        // PUT: api/Hotels/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotel(int id, Hotel hotel)
-        {
-            if (id != hotel.Id)
-            {
-                return BadRequest();
-            }
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateHotelDto dto)
+    {
+        var isUpdated = await _hotelService.UpdateAsync(id, dto);
+        if (!isUpdated) return NotFound($"Hotel with Id {id} not found.");
 
-            context.Entry(hotel).State = EntityState.Modified;
+        return NoContent();
+    }
 
-            try
-            {
-                await context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HotelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var isDeleted = await _hotelService.DeleteAsync(id);
+        if (!isDeleted) return NotFound($"Hotel with Id {id} not found.");
 
-            return NoContent();
-        }
-
-        // POST: api/Hotels
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
-        {
-            context.Hotels.Add(hotel);
-            await context.SaveChangesAsync();
-
-            return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
-        }
-
-        // DELETE: api/Hotels/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHotel(int id)
-        {
-            var hotel = await context.Hotels.FindAsync(id);
-            if (hotel == null)
-            {
-                return NotFound();
-            }
-
-            context.Hotels.Remove(hotel);
-            await context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool HotelExists(int id)
-        {
-            return context.Hotels.Any(c => c.Id == id);
-        }
+        return NoContent();
     }
 }
