@@ -11,5 +11,5 @@ public class HotelReservationDBContext(DbContextOptions<HotelReservationDBContex
 {
     public DbSet<Hotel> Hotels { get; set; }
     public DbSet<Country> Countries { get; set; }
-    public DbSet<User> Users { get; set; } // নতুন ইউজার টেবিল যুক্ত করা হলো
+    public DbSet<User> Users { get; set; }
 }
