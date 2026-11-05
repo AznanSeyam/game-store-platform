@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using hotel_reservation_api.Core.DTOs.Hotel;
 using hotel_reservation_api.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization; // অথোরাইজেশন ব্যবহারের জন্য নামস্পেস যুক্ত করা হয়েছে
 using Microsoft.AspNetCore.Mvc;
 
 namespace hotel_reservation_api.Controllers;
@@ -36,6 +37,7 @@ public class HotelsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")] // শুধুমাত্র Admin নতুন হোটেল তৈরি করতে পারবে
     public async Task<IActionResult> Create([FromBody] CreateHotelDto dto)
     {
         var createdHotel = await _hotelService.CreateAsync(dto);
@@ -43,6 +45,7 @@ public class HotelsController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "Admin")] // শুধুমাত্র Admin হোটেল আপডেট করতে পারবে
     public async Task<IActionResult> Update(int id, [FromBody] UpdateHotelDto dto)
     {
         var isUpdated = await _hotelService.UpdateAsync(id, dto);
@@ -52,6 +55,7 @@ public class HotelsController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin")] // শুধুমাত্র Admin হোটেল ডিলিট করতে পারবে
     public async Task<IActionResult> Delete(int id)
     {
         var isDeleted = await _hotelService.DeleteAsync(id);
