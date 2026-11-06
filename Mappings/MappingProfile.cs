@@ -9,12 +9,10 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        // Country Mappings
         CreateMap<Country, CountryDto>().ReverseMap();
         CreateMap<CreateCountryDto, Country>();
         CreateMap<UpdateCountryDto, Country>();
 
-        // Hotel Mappings
         CreateMap<Hotel, HotelDto>()
             .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country != null ? src.Country.Name : string.Empty));
         CreateMap<CreateHotelDto, Hotel>();
