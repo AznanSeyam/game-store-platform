@@ -12,5 +12,5 @@ public class Hotel
     public required string Address { get; set; }
     public double Rating { get; set; }
     public int CountryId { get; set; }
-    public Country? Country { get; set; }
+    public required Country Country { get; set; }
 }
