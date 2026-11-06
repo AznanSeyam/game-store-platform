@@ -8,5 +8,5 @@ namespace hotel_reservation_api.Core.Interfaces;
 
 public interface ITokenService
 {
-    string CreateToken(User user);
+    string CreateJWTToken(User user);
 }

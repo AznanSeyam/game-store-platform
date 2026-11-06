@@ -10,70 +10,62 @@ using Microsoft.EntityFrameworkCore;
 
 namespace hotel_reservation_api.Core.Services
 {
-    public class HotelService : IHotelService
+    public class HotelService(HotelReservationDBContext context, IMapper mapper) : IHotelService
     {
-        private readonly HotelReservationDBContext _context;
-        private readonly IMapper _mapper;
 
-        public HotelService(HotelReservationDBContext context, IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
 
         public async Task<IEnumerable<HotelDto>> GetAllAsync()
         {
-            var hotels = await _context.Hotels
+            var hotels = await context.Hotels
                 .Include(h => h.Country)
                 .ToListAsync();
 
-            return _mapper.Map<IEnumerable<HotelDto>>(hotels);
+            return mapper.Map<IEnumerable<HotelDto>>(hotels);
         }
 
         public async Task<HotelDto?> GetByIdAsync(int id)
         {
-            var hotel = await _context.Hotels
+            var hotel = await context.Hotels
                 .Include(h => h.Country)
                 .FirstOrDefaultAsync(h => h.Id == id);
 
             if (hotel == null) return null;
 
-            return _mapper.Map<HotelDto>(hotel);
+            return mapper.Map<HotelDto>(hotel);
         }
 
         public async Task<HotelDto> CreateAsync(CreateHotelDto dto)
         {
-            var hotel = _mapper.Map<Hotel>(dto);
+            var hotel = mapper.Map<Hotel>(dto);
 
-            _context.Hotels.Add(hotel);
-            await _context.SaveChangesAsync();
+            context.Hotels.Add(hotel);
+            await context.SaveChangesAsync();
 
-            // কান্ট্রির নামসহ রিটার্ন করার জন্য রিলেশন রিলোড করা
-            var createdHotel = await _context.Hotels
+            var createdHotel = await context.Hotels
                 .Include(h => h.Country)
                 .FirstAsync(h => h.Id == hotel.Id);
 
-            return _mapper.Map<HotelDto>(createdHotel);
+            return mapper.Map<HotelDto>(createdHotel);
         }
 
         public async Task<bool> UpdateAsync(int id, UpdateHotelDto dto)
         {
-            var hotel = await _context.Hotels.FindAsync(id);
+            var hotel = await context.Hotels.FindAsync(id);
             if (hotel == null) return false;
 
-            _mapper.Map(dto, hotel);
+            mapper.Map(dto, hotel);
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return true;
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var hotel = await _context.Hotels.FindAsync(id);
+            var hotel = await context.Hotels.FindAsync(id);
             if (hotel == null) return false;
 
-            _context.Hotels.Remove(hotel);
-            await _context.SaveChangesAsync();
+            context.Hotels.Remove(hotel);
+            await context.SaveChangesAsync();
             return true;
         }
     }

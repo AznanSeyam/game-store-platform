@@ -8,62 +8,54 @@ using hotel_reservation_api.Core.Interfaces;
 using hotel_reservation_api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace hotel_reservation_api.Core.Services
+namespace hotel_reservation_api.Core.Services;
+
+public class CountryService(HotelReservationDBContext context, IMapper mapper) : ICountryService
 {
-    public class CountryService : ICountryService
+
+
+    public async Task<IEnumerable<CountryDto>> GetAllAsync()
     {
-        private readonly HotelReservationDBContext _context;
-        private readonly IMapper _mapper;
+        var countries = await context.Countries.ToListAsync();
+        return mapper.Map<IEnumerable<CountryDto>>(countries);
+    }
 
-        public CountryService(HotelReservationDBContext context, IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
+    public async Task<CountryDto?> GetByIdAsync(int id)
+    {
+        var country = await context.Countries.FindAsync(id);
+        if (country == null) return null;
 
-        public async Task<IEnumerable<CountryDto>> GetAllAsync()
-        {
-            var countries = await _context.Countries.ToListAsync();
-            return _mapper.Map<IEnumerable<CountryDto>>(countries);
-        }
+        return mapper.Map<CountryDto>(country);
+    }
 
-        public async Task<CountryDto?> GetByIdAsync(int id)
-        {
-            var country = await _context.Countries.FindAsync(id);
-            if (country == null) return null;
+    public async Task<CountryDto> CreateAsync(CreateCountryDto dto)
+    {
+        var country = mapper.Map<Country>(dto);
 
-            return _mapper.Map<CountryDto>(country);
-        }
+        context.Countries.Add(country);
+        await context.SaveChangesAsync();
 
-        public async Task<CountryDto> CreateAsync(CreateCountryDto dto)
-        {
-            var country = _mapper.Map<Country>(dto);
+        return mapper.Map<CountryDto>(country);
+    }
 
-            _context.Countries.Add(country);
-            await _context.SaveChangesAsync();
+    public async Task<bool> UpdateAsync(int id, UpdateCountryDto dto)
+    {
+        var country = await context.Countries.FindAsync(id);
+        if (country == null) return false;
 
-            return _mapper.Map<CountryDto>(country);
-        }
+        mapper.Map(dto, country);
 
-        public async Task<bool> UpdateAsync(int id, UpdateCountryDto dto)
-        {
-            var country = await _context.Countries.FindAsync(id);
-            if (country == null) return false;
+        await context.SaveChangesAsync();
+        return true;
+    }
 
-            _mapper.Map(dto, country); // এক্সিস্টিং এনটিটিতে ডাটা আপডেট করে নেওয়া
+    public async Task<bool> DeleteAsync(int id)
+    {
+        var country = await context.Countries.FindAsync(id);
+        if (country == null) return false;
 
-            await _context.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var country = await _context.Countries.FindAsync(id);
-            if (country == null) return false;
-
-            _context.Countries.Remove(country);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+        context.Countries.Remove(country);
+        await context.SaveChangesAsync();
+        return true;
     }
 }
