@@ -2,8 +2,7 @@ using AutoMapper;
 using game_store_platform.Core.DTOs.Game;
 using game_store_platform.Core.DTOs.Order;
 using game_store_platform.Data.Entities;
-using game_store_platform.Core.DTOs.Country;
-using game_store_platform.Core.DTOs.Hotel;
+using game_store_platform.Core.DTOs.Genre;
 
 namespace game_store_platform.Mappings
 {

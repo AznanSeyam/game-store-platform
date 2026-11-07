@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using game_store_platform.Core.DTOs.Game;
-using game_store_platform.Core.DTOs.Hotel;
 using game_store_platform.Core.Interfaces;
 using game_store_platform.Data;
 using game_store_platform.Data.Entities;
