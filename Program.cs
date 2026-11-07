@@ -1,6 +1,6 @@
 using System.Text;
-//using game_store_platform.Core.Interfaces;
-//using game_store_platform.Core.Services;
+using game_store_platform.Core.Interfaces;
+using game_store_platform.Core.Services;
 using game_store_platform.Data;
 using game_store_platform.Mappings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,23 +9,20 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("GameStoreConnection");
 builder.Services.AddDbContext<GameStoreDBContext>(options => options.UseNpgsql(connectionString));
 
-// Register AutoMapper
 builder.Services.AddAutoMapper(mp =>
 {
     mp.AddProfile<MappingProfile>();
 });
 
-// Register Services & Interfaces (Hotel, Country, Auth, Token)
-/*builder.Services.AddScoped<IHotelService, HotelService>();
-builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ITokenService, TokenService>();*/
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IGameService, GameService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
-// Configure JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -44,7 +41,6 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-// Database Seeding (Admin User create korar jonno)
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -61,7 +57,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -69,7 +64,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Authentication ekhane dite hobe Authorization er AGE
 app.UseAuthentication();
 app.UseAuthorization();
 
