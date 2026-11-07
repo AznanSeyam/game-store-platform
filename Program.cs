@@ -1,8 +1,8 @@
 using System.Text;
-using hotel_reservation_api.Core.Interfaces;
-using hotel_reservation_api.Core.Services;
-using hotel_reservation_api.Data;
-using hotel_reservation_api.Mappings;
+//using game_store_platform.Core.Interfaces;
+//using game_store_platform.Core.Services;
+using game_store_platform.Data;
+using game_store_platform.Mappings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -10,8 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("HotelReservationConnection");
-builder.Services.AddDbContext<HotelReservationDBContext>(options => options.UseNpgsql(connectionString));
+var connectionString = builder.Configuration.GetConnectionString("GameStoreConnection");
+builder.Services.AddDbContext<GameStoreDBContext>(options => options.UseNpgsql(connectionString));
 
 // Register AutoMapper
 builder.Services.AddAutoMapper(mp =>
@@ -20,10 +20,10 @@ builder.Services.AddAutoMapper(mp =>
 });
 
 // Register Services & Interfaces (Hotel, Country, Auth, Token)
-builder.Services.AddScoped<IHotelService, HotelService>();
+/*builder.Services.AddScoped<IHotelService, HotelService>();
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ITokenService, TokenService>();*/
 
 // Configure JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -32,7 +32,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:TokenKey"] ?? "super_secret_key_here_at_least_32_bytes_long")),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:TokenKey"]!)),
             ValidateIssuer = true,
             ValidIssuer = builder.Configuration["JWT:Issuer"],
             ValidateAudience = true,
@@ -50,7 +50,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
-        var context = services.GetRequiredService<HotelReservationDBContext>();
+        var context = services.GetRequiredService<GameStoreDBContext>();
         await context.Database.MigrateAsync();
         await DbInitializer.SeedAdminUserAsync(context);
     }

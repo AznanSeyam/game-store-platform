@@ -1,21 +1,37 @@
 using AutoMapper;
-using hotel_reservation_api.Core.DTOs.Country;
-using hotel_reservation_api.Core.DTOs.Hotel;
-using hotel_reservation_api.Data;
+using game_store_platform.Core.DTOs.Game;
+using game_store_platform.Core.DTOs.Order;
+using game_store_platform.Data.Entities;
+using game_store_platform.Core.DTOs.Country;
+using game_store_platform.Core.DTOs.Hotel;
 
-namespace hotel_reservation_api.Mappings;
-
-public class MappingProfile : Profile
+namespace game_store_platform.Mappings
 {
-    public MappingProfile()
+    public class MappingProfile : Profile
     {
-        CreateMap<Country, CountryDto>().ReverseMap();
-        CreateMap<CreateCountryDto, Country>();
-        CreateMap<UpdateCountryDto, Country>();
+        public MappingProfile()
+        {
 
-        CreateMap<Hotel, HotelDto>()
-            .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country != null ? src.Country.Name : string.Empty));
-        CreateMap<CreateHotelDto, Hotel>();
-        CreateMap<UpdateHotelDto, Hotel>();
+            CreateMap<Genre, GenreDto>().ReverseMap();
+            CreateMap<CreateGenreDto, Genre>();
+            CreateMap<UpdateGenreDto, Genre>();
+
+
+
+            CreateMap<Game, GameDto>()
+                .ForMember(dest => dest.GenreName,
+                           opt => opt.MapFrom(src => src.Genre != null ? src.Genre.Name : string.Empty));
+
+            CreateMap<CreateGameDto, Game>();
+            CreateMap<UpdateGameDto, Game>();
+
+
+
+            CreateMap<Order, OrderDto>()
+                .ForMember(dest => dest.GameTitle,
+                           opt => opt.MapFrom(src => src.Game != null ? src.Game.Title : string.Empty))
+                .ForMember(dest => dest.Status,
+                           opt => opt.MapFrom(src => src.Status.ToString()));
+        }
     }
 }

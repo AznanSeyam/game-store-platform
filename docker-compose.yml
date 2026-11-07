@@ -3,7 +3,7 @@ services:
     image: postgres:16
     container_name: postgres_container
     environment:
-      POSTGRES_DB: hotel_db
+      POSTGRES_DB: game_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: linux
     ports:

@@ -27,3 +27,4 @@ Thumbs.db
 
 ## User-specific files & Secrets
 appsettings.Development.json
+appsettings.json

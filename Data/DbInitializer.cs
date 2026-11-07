@@ -1,31 +1,33 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using hotel_reservation_api.Data.Entities;
+using game_store_platform.Data.Entities;
+using game_store_platform.Data.Enums;
 
-namespace hotel_reservation_api.Data;
-
-public static class DbInitializer
+namespace game_store_platform.Data
 {
-    public static async Task SeedAdminUserAsync(HotelReservationDBContext context)
+    public static class DbInitializer
     {
-        if (await context.Users.AnyAsync(u => u.Role == "Admin"))
+        public static async Task SeedAdminUserAsync(GameStoreDBContext context)
         {
-            return;
+            if (await context.Users.AnyAsync(u => u.Role == UserRole.Admin))
+            {
+                return;
+            }
+
+            var adminUser = new User
+            {
+                Username = "SuperAdmin",
+                Email = "admin@gamestore.com",
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@123"),
+                Role = UserRole.Admin,
+                CreatedAt = DateTime.UtcNow,
+                WalletBalance = 0
+            };
+
+            context.Users.Add(adminUser);
+            await context.SaveChangesAsync();
         }
-
-        var adminUser = new User
-        {
-            Username = "SuperAdmin",
-            Email = "admin@hotel.com",
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@123"),
-            Role = "Admin",
-            CreatedAt = DateTime.UtcNow
-        };
-
-        context.Users.Add(adminUser);
-        await context.SaveChangesAsync();
     }
 }

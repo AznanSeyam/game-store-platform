@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,3 +14,4 @@ public interface IHotelService
     Task<bool> UpdateAsync(int id, UpdateHotelDto dto);
     Task<bool> DeleteAsync(int id);
 }
+*/
