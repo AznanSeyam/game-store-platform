@@ -6024,11 +6024,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/linux/RiderProjects/hotel-reservation-api/hotel-reservation-api/hotel-reservation-api.csproj",
+      "projectUniqueName": "/home/linux/RiderProjects/game-store-platform/game-store-platform/hotel-reservation-api.csproj",
       "projectName": "hotel-reservation-api",
-      "projectPath": "/home/linux/RiderProjects/hotel-reservation-api/hotel-reservation-api/hotel-reservation-api.csproj",
+      "projectPath": "/home/linux/RiderProjects/game-store-platform/game-store-platform/hotel-reservation-api.csproj",
       "packagesPath": "/home/linux/.nuget/packages/",
-      "outputPath": "/home/linux/RiderProjects/hotel-reservation-api/hotel-reservation-api/obj/",
+      "outputPath": "/home/linux/RiderProjects/game-store-platform/game-store-platform/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/linux/.nuget/NuGet/NuGet.Config"
