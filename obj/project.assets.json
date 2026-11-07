@@ -6024,9 +6024,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/linux/RiderProjects/game-store-platform/game-store-platform/hotel-reservation-api.csproj",
-      "projectName": "hotel-reservation-api",
-      "projectPath": "/home/linux/RiderProjects/game-store-platform/game-store-platform/hotel-reservation-api.csproj",
+      "projectUniqueName": "/home/linux/RiderProjects/game-store-platform/game-store-platform/game_store_platform.csproj",
+      "projectName": "game_store_platform",
+      "projectPath": "/home/linux/RiderProjects/game-store-platform/game-store-platform/game_store_platform.csproj",
       "packagesPath": "/home/linux/.nuget/packages/",
       "outputPath": "/home/linux/RiderProjects/game-store-platform/game-store-platform/obj/",
       "projectStyle": "PackageReference",
