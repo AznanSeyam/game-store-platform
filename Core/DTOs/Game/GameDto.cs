@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace game_store_platform.Core.DTOs.Hotel
+namespace game_store_platform.Core.DTOs.Game
 {
     public class GameDto
     {

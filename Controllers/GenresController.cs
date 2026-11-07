@@ -1,4 +1,4 @@
-using game_store_platform.Core.DTOs.Country;
+using game_store_platform.Core.DTOs.Genre;
 using game_store_platform.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

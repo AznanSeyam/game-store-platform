@@ -3,7 +3,7 @@ using game_store_platform.Core.Interfaces;
 using game_store_platform.Data;
 using game_store_platform.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using game_store_platform.Core.DTOs.Country;
+using game_store_platform.Core.DTOs.Genre;
 
 namespace game_store_platform.Core.Services;
 
