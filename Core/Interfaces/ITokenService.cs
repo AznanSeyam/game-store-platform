@@ -1,13 +1,13 @@
-/*using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using hotel_reservation_api.Data.Entities;
+using game_store_platform.Data.Entities;
 
-namespace hotel_reservation_api.Core.Interfaces;
+namespace game_store_platform.Core.Interfaces;
 
 public interface ITokenService
 {
-    string CreateJWTToken(User user);
+    string GenerateToken(User user);
+
 }
-*/

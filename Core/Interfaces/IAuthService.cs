@@ -1,14 +1,14 @@
-/*using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using hotel_reservation_api.Core.DTOs.Auth;
+using game_store_platform.Core.DTOs.Auth;
 
-namespace hotel_reservation_api.Core.Interfaces;
-
-public interface IAuthService
+namespace game_store_platform.Core.Interfaces
 {
-    Task<AuthResponseDto?> RegisterAsync(RegisterDto registerDto);
-    Task<AuthResponseDto?> LoginAsync(LoginDto loginDto);
+    public interface IAuthService
+    {
+        Task<AuthResponseDto?> RegisterAsync(RegisterDto registerDto);
+        Task<AuthResponseDto?> LoginAsync(LoginDto loginDto);
+    }
 }
-*/

@@ -1,19 +1,18 @@
-/*using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using hotel_reservation_api.Core.DTOs.Auth;
-using hotel_reservation_api.Core.Interfaces;
-using hotel_reservation_api.Data;
-using hotel_reservation_api.Data.Entities;
+using game_store_platform.Core.DTOs.Auth;
+using game_store_platform.Core.Interfaces;
+using game_store_platform.Data;
+using game_store_platform.Data.Entities;
+using game_store_platform.Data.Enums;
 
-namespace hotel_reservation_api.Core.Services
+namespace game_store_platform.Core.Services
 {
-    public class AuthService(HotelReservationDBContext context, ITokenService tokenService) : IAuthService
+    public class AuthService(GameStoreDBContext context, ITokenService tokenService) : IAuthService
     {
-
-
         public async Task<AuthResponseDto?> RegisterAsync(RegisterDto registerDto)
         {
             if (await context.Users.AnyAsync(u => u.Email == registerDto.Email))
@@ -28,7 +27,9 @@ namespace hotel_reservation_api.Core.Services
                 Username = registerDto.Username,
                 Email = registerDto.Email,
                 PasswordHash = passwordHash,
-                Role = "Customer"
+                Role = UserRole.Customer,
+                CreatedAt = DateTime.UtcNow,
+                WalletBalance = 5000
             };
 
             context.Users.Add(user);
@@ -38,8 +39,9 @@ namespace hotel_reservation_api.Core.Services
             {
                 Username = user.Username,
                 Email = user.Email,
-                Token = tokenService.CreateJWTToken(user),
-                Role = user.Role
+                Token = tokenService.GenerateToken(user),
+                Role = user.Role.ToString(),
+                WalletBalance = user.WalletBalance
             };
         }
 
@@ -55,10 +57,10 @@ namespace hotel_reservation_api.Core.Services
             {
                 Username = user.Username,
                 Email = user.Email,
-                Token = tokenService.CreateJWTToken(user),
-                Role = user.Role
+                Token = tokenService.GenerateToken(user),
+                Role = user.Role.ToString(),
+                WalletBalance = user.WalletBalance
             };
         }
     }
 }
-*/
