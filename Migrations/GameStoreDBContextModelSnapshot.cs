@@ -8,7 +8,7 @@ using game_store_platform.Data;
 
 #nullable disable
 
-namespace hotel_reservation_api.Migrations
+namespace game_store_platform.Migrations
 {
     [DbContext(typeof(GameStoreDBContext))]
     partial class GameStoreDBContextModelSnapshot : ModelSnapshot

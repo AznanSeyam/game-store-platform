@@ -9,10 +9,10 @@ using game_store_platform.Data;
 
 #nullable disable
 
-namespace hotel_reservation_api.Migrations
+namespace game_store_platform.Migrations
 {
     [DbContext(typeof(GameStoreDBContext))]
-    [Migration("20261107115243_InitialCreate")]
+    [Migration("20261108075449_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

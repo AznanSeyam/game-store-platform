@@ -7,7 +7,7 @@ namespace game_store_platform.Core.DTOs.Genre
 {
     public class CreateGenreDto
     {
-        public required string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
     }
 }
