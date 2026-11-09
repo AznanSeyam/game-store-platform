@@ -24,7 +24,6 @@ namespace game_store_platform.Controllers
             if (game == null) return NotFound($"Game with Id {id} not found.");
             return Ok(game);
         }
-
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] CreateGameDto dto)
