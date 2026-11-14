@@ -2,6 +2,7 @@ http://localhost:5229/api/auth/login
 http://localhost:5229/api/genres
 http://localhost:5229/api/games
 http://localhost:5229/api/auth/register
+
 http://localhost:5229/api/orders/buy/1
 http://localhost:5229/api/orders/my-orders
 http://localhost:5229/api/games
