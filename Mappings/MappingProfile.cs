@@ -5,6 +5,7 @@ using game_store_platform.Data.Entities;
 using game_store_platform.Core.DTOs.Genre;
 
 
+
 namespace game_store_platform.Mappings
 {
     public class MappingProfile : Profile
