@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+
 namespace game_store_platform.Data.Entities
 {
     public class Game
