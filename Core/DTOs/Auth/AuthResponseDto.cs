@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
+
 namespace game_store_platform.Core.DTOs.Auth
 {
     public class AuthResponseDto
